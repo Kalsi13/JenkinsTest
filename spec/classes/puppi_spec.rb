@@ -14,4 +14,8 @@ describe 'puppi' do
     it { should contain_file('puppi_datadir').with_ensure('directory') }
   end
 
+  describe 'whatever' do
+    it { should contain_file('meow').with_ensure('present') }
+  end
+
 end
