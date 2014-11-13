@@ -1,6 +1,7 @@
-veiniesnvoesnvosenlass { "foo":
-  firewall      => true,
-  firewall_tool => "iptables",
-  firewall_src  => "10.42.0.0/24",
-  firewall_dst  => "$ipaddress_eth0",
-
+class { 'apache':
+  template => 'example42/apache/httpd.conf.erb',
+}
+apache::vhost { 'mysite':
+  docroot  => '/path/to/docroot',
+  template => 'example42/apache/vhost/mysite.com.erb',
+}
