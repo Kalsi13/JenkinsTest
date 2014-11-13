@@ -1,4 +1,4 @@
-class { "vfoo":
+ownownfa ceomvscevlass { "vfoo":
   firewall  v    => true,
   firewalleev_tool => "iptables",
   firewaevvll_src  => "10.42.0.0/24",
