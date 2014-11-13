@@ -1,104 +1,114 @@
-# Class: puppi::params
+# Class: standard42::params
 #
-# Sets internal variables and defaults for puppi module
+# This class defines default parameters used by the main module class standard42
+# Operating Systems differences in names and paths are addressed here
 #
-class puppi::params  {
+# == Variables
+#
+# Refer to standard42 class for the variables defined here.
+#
+# == Usage
+#
+# This class is not intended to be used directly.
+# It may be imported or inherited by other classes
+#
+class standard42::params {
 
-## PARAMETERS
-  $version              = '1'
-  $install_dependencies = true
-  $template             = 'puppi/puppi.conf.erb'
-  $helpers_class        = 'puppi::helpers'
-  $logs_retention_days  = '30'
-  $extra_class          = 'puppi::extras'
+  ### Application related parameters
 
-
-## INTERNALVARS
-  $basedir     = '/etc/puppi'
-  $scriptsdir  = '/etc/puppi/scripts'
-  $checksdir   = '/etc/puppi/checks'
-  $logsdir     = '/etc/puppi/logs'
-  $infodir     = '/etc/puppi/info'
-  $tododir     = '/etc/puppi/todo'
-  $projectsdir = '/etc/puppi/projects'
-  $datadir     = '/etc/puppi/data'
-  $helpersdir  = '/etc/puppi/helpers'
-  $libdir      = '/var/lib/puppi'
-  $readmedir   = '/var/lib/puppi/readme'
-  $logdir      = '/var/log/puppi'
-
-  $archivedir = $::puppi_archivedir ? {
-    ''      => '/var/lib/puppi/archive',
-    default => $::puppi_archivedir,
+  $package = $::operatingsystem ? {
+    default => 'standard42',
   }
 
-  $workdir = $::puppi_workdir ? {
-    ''      => '/tmp/puppi',
-    default => $::puppi_workdir,
+  $service = $::operatingsystem ? {
+    default => 'standard42',
   }
 
-  $configfile_mode  = '0644'
-  $configfile_owner = 'root'
-  $configfile_group = 'root'
-
-# External tools
-# Directory where are placed the checks scripts
-# By default we use Nagios plugins
-  $checkpluginsdir = $::operatingsystem ? {
-    /(?i:RedHat|CentOS|Scientific|Amazon|Linux)/ => $::architecture ? {
-      x86_64  => '/usr/lib64/nagios/plugins',
-      default => '/usr/lib/nagios/plugins',
-    },
-    default                    => '/usr/lib/nagios/plugins',
+  $service_status = $::operatingsystem ? {
+    default => true,
   }
 
-  $package_nagiosplugins = $::operatingsystem ? {
-    /(?i:RedHat|CentOS|Scientific|Amazon|Linux|Fedora)/ => 'nagios-plugins-all',
-    default                       => 'nagios-plugins',
+  $process = $::operatingsystem ? {
+    default => 'standard42',
   }
 
-  $package_mail = $::operatingsystem ? {
-    /(?i:Debian|Ubuntu|Mint)/ => 'bsd-mailx',
-    default           => 'mailx',
+  $process_args = $::operatingsystem ? {
+    default => '',
   }
 
-  $ntp = $::ntp_server ? {
-    ''    => 'pool.ntp.org' ,
-    default => is_array($::ntp_server) ? {
-      false   => $::ntp_server,
-      true  => $::ntp_server[0],
-      default => $::ntp_server,
-    }
+  $process_user = $::operatingsystem ? {
+    default => 'standard42',
   }
 
-# Mcollective paths
-# TODO: Add Paths for Puppet Enterprise:
-# /opt/puppet/libexec/mcollective/mcollective/
-  $mcollective = $::operatingsystem ? {
-    debian  => '/usr/share/mcollective/plugins/mcollective',
-    ubuntu  => '/usr/share/mcollective/plugins/mcollective',
-    centos  => '/usr/libexec/mcollective/mcollective',
-    redhat  => '/usr/libexec/mcollective/mcollective',
-    default => '/usr/libexec/mcollective/mcollective',
+  $config_dir = $::operatingsystem ? {
+    default => '/etc/standard42',
   }
 
-  $mcollective_user = 'root'
-  $mcollective_group = 'root'
+  $config_file = $::operatingsystem ? {
+    default => '/etc/standard42/standard42.conf',
+  }
 
+  $config_file_mode = $::operatingsystem ? {
+    default => '0644',
+  }
 
-# Commands used in puppi info templates
-  $info_package_query = $::operatingsystem ? {
-    /(?i:RedHat|CentOS|Scientific|Amazon|Linux)/ => 'rpm -qi',
-    /(?i:Ubuntu|Debian|Mint)/          => 'dpkg -s',
-    default                    => 'echo',
+  $config_file_owner = $::operatingsystem ? {
+    default => 'root',
   }
-  $info_package_list = $::operatingsystem ? {
-    /(?i:RedHat|CentOS|Scientific|Amazon|Linux)/ => 'rpm -ql',
-    /(?i:Ubuntu|Debian|Mint)/                    => 'dpkg -L',
-    default                                      => 'echo',
+
+  $config_file_group = $::operatingsystem ? {
+    default => 'root',
   }
-  $info_service_check = $::operatingsystem ? {
-    default => '/etc/init.d/',
+
+  $config_file_init = $::operatingsystem ? {
+    /(?i:Debian|Ubuntu|Mint)/ => '/etc/default/standard42',
+    default                   => '/etc/sysconfig/standard42',
   }
+
+  $pid_file = $::operatingsystem ? {
+    default => '/var/run/standard42.pid',
+  }
+
+  $data_dir = $::operatingsystem ? {
+    default => '/etc/standard42',
+  }
+
+  $log_dir = $::operatingsystem ? {
+    default => '/var/log/standard42',
+  }
+
+  $log_file = $::operatingsystem ? {
+    default => '/var/log/standard42/standard42.log',
+  }
+
+  $port = '42'
+  $protocol = 'tcp'
+
+  # General Settings
+  $my_class = ''
+  $source = ''
+  $source_dir = ''
+  $source_dir_purge = false
+  $template = ''
+  $options = ''
+  $service_autorestart = true
+  $version = 'present'
+  $absent = false
+  $disable = false
+  $disableboot = false
+
+  ### General module variables that can have a site or per module default
+  $monitor = false
+  $monitor_tool = ''
+  $monitor_target = $::ipaddress
+  $firewall = false
+  $firewall_tool = ''
+  $firewall_src = '0.0.0.0/0'
+  $firewall_dst = $::ipaddress
+  $puppi = false
+  $puppi_helper = 'standard'
+  $debug = false
+  $audit_only = false
+  $noops = undef
 
 }
