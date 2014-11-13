@@ -16,9 +16,6 @@ class standard42::params {
 
   ### Application related parameters
 
-  $Define = Cunts
-    default = Ben 
-
   $package = $::operatingsystem ? {
     default => 'standard42',
   }
