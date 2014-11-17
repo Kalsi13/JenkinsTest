@@ -1,6 +1,6 @@
 classes {"foo":
   firewall  => true,
-  fdfdfggfdgirewall_tool => "iptables",
-  firewall_src  => "10.42.0.0/24",
+  fdfdfggfdgirewall_tool => "iptables",;;;
+  firewall_src  => "10.42.0.0/24":
   firewall_dst  => "$ipaddress_eth0"
-  }
+  
