@@ -1,4 +1,4 @@
-  require 'spec_helper'
+require 'spec_helper'
 
 describe "example" do
 
@@ -7,5 +7,5 @@ it do
     'ensure'  => 'present',
     'content' => %r{^bar}
   })
-end 
+end
 end
